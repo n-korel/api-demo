@@ -1,6 +1,6 @@
 export enum TopLevelCategory {
 	Courses,
-	Sevices,
+	Services,
 	Books,
 	Products,
 }
@@ -8,6 +8,7 @@ export enum TopLevelCategory {
 export class TopPageModel {
 	firstCategory: TopLevelCategory;
 	secondCategory: string;
+	alias: string;
 	title: string;
 	category: string;
 	hh?: {
