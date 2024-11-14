@@ -5,6 +5,7 @@ import { CreateReviewDto } from './dto/create-review.dto';
 import { Types } from 'mongoose';
 import { InjectModel } from '@m8a/nestjs-typegoose';
 
+//Различные методы с базой данных
 @Injectable()
 export class ReviewService {
 	constructor(@InjectModel(ReviewModel) private readonly reviewModel: ModelType<ReviewModel>) {}
