@@ -7,6 +7,7 @@ import { USER_NOT_FOUND_ERROR, WRONG_PASSWORD_ERROR } from './auth.constants';
 import { compare, genSalt, hash } from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 
+//Различные методы с базой данных
 @Injectable()
 export class AuthService {
 	constructor(
