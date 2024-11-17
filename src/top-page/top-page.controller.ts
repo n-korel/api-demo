@@ -15,9 +15,9 @@ import {
 import { FindTopPageDto } from './dto/find-top-page.dto';
 import { CreateTopPageDto } from './dto/create-top-page.dto';
 import { TopPageService } from './top-page.service';
-import { IdValidationPipe } from 'src/pipes/ad-validation.pipe';
+import { IdValidationPipe } from '../pipes/ad-validation.pipe';
 import { TOP_PAGE_NOT_FOUND_ERROR } from './top-page.constants';
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
 @Controller('top-page')
 export class TopPageController {
@@ -72,5 +72,10 @@ export class TopPageController {
 	@Post('find')
 	async find(@Body() dto: FindTopPageDto) {
 		return this.topPageService.findByCategory(dto.firstCategory);
+	}
+
+	@Get('textSearch/:text')
+	async textSearch(@Param('text') text: string) {
+		return this.topPageService.findByText(text);
 	}
 }
