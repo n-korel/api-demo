@@ -12,6 +12,7 @@ jobs:
       - name: Publish to registy
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
+          node-version: '18'
           registry: docker.pkg.github.com
           name: docker.pkg.github.com/n-korel/api-demo/api-demo
           username: ${{ secrets.DOCKER_USERNAME }}
