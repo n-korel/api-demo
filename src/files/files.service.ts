@@ -15,7 +15,7 @@ export class FilesService {
 		const res: FileElementResponse[] = [];
 		for (const file of files) {
 			await writeFile(`${uploadFodler}/${file.originalname}`, file.buffer);
-			res.push({ url: `${dateFolder}/${file.originalname}`, name: file.originalname });
+			res.push({ url: `/uploads/${dateFolder}/${file.originalname}`, name: file.originalname });
 		}
 		return res;
 	}
