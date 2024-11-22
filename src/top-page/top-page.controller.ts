@@ -18,10 +18,18 @@ import { TopPageService } from './top-page.service';
 import { IdValidationPipe } from '../pipes/ad-validation.pipe';
 import { TOP_PAGE_NOT_FOUND_ERROR } from './top-page.constants';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { HhService } from 'src/hh/hh.service';
+import { resolve } from 'path';
+import { rejects } from 'assert';
+import { Cron, CronExpression, SchedulerRegistry } from '@nestjs/schedule';
 
 @Controller('top-page')
 export class TopPageController {
-	constructor(private readonly topPageService: TopPageService) {}
+	constructor(
+		private readonly topPageService: TopPageService,
+		private readonly hhService: HhService,
+		private readonly schedulerRegistry: SchedulerRegistry,
+	) {}
 
 	@UseGuards(JwtAuthGuard)
 	@Post('create')
@@ -77,5 +85,16 @@ export class TopPageController {
 	@Get('textSearch/:text')
 	async textSearch(@Param('text') text: string) {
 		return this.topPageService.findByText(text);
+	}
+
+	@Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, { name: 'test' })
+	async test() {
+		const job = this.schedulerRegistry.getCronJob('test');
+		const data = await this.topPageService.findForHhUpdate(new Date());
+		for (let page of data) {
+			const HhData = await this.hhService.getData(page.category);
+			page.hh = HhData;
+			await this.topPageService.updateById(page._id, page);
+		}
 	}
 }
